@@ -40,6 +40,8 @@ class Game : public graphics::AnimationEventListener, public graphics::MouseEven
   std::vector<std::unique_ptr<OpponentProjectile> > oshots_;
   std::vector<std::unique_ptr<PlayerProjectile> > pshots_;
   Player player_;
+  PlayerTalking playerTalking;
+  GameCircling gameCircling;
   int score_, deathCount = 0;
   bool gameState, gameStarted = false;
 };

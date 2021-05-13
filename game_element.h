@@ -16,6 +16,7 @@ class GameElement {
       poopImg.Load("poop.bmp");
       }
 
+
   int GetWidth() const { return width_; }
   int GetHeight() const { return height_; }
 
@@ -41,10 +42,10 @@ class GameElement {
       frame->Load(prefix + std::to_string(p) + ".bmp");
       paFrames.push_back(std::move(frame));
     }
-    for (size_t i = 1; i <= 8; i++) {
+    for (size_t i = 0; i < 8; i++) {
       int p = i;
       std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
-      std::string prefix = "Talk";
+      std::string prefix = "test";
       frame->Load(prefix + std::to_string(p) + ".bmp");
       playerTalkFrames.push_back(std::move(frame));
     }
@@ -56,14 +57,13 @@ class GameElement {
       oaFrames.push_back(std::move(frame));
     }
     // for (size_t i = 0; i < 64; i++) {
-      // int p = i;
-      // std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
-      // std::string prefix = std::to_string(p);
-      // frame->Load(prefix + "ICON.bmp");
-      // ICON.push_back(std::move(frame));
+    //   int p = i;
+    //   std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
+    //   std::string prefix = std::to_string(p);
+    //   frame->Load(prefix + "ICON.bmp");
+    //   gameAnimation.push_back(std::move(frame));
     // }
   }
-
   virtual void Draw(graphics::Image &background) = 0;
   virtual void Move(const graphics::Image &gameScreen) = 0;
  protected:
@@ -74,9 +74,8 @@ class GameElement {
   graphics::Image* poop = &poopImg;
   std::vector<std::unique_ptr<graphics::Image> > paFrames;
   std::vector<std::unique_ptr<graphics::Image> > oaFrames;
-  std::vector<std::unique_ptr<graphics::Image> > ICON;
+  std::vector<std::unique_ptr<graphics::Image> > gameAnimation;
   std::vector<std::unique_ptr<graphics::Image> > playerTalkFrames;
-
 };
 
 #endif

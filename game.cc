@@ -135,11 +135,15 @@ void Game::OnAnimationStep() {
   RemoveInactive();
   UpdateScreen();
 } else {
-
+  playerTalking.Draw(gameScreen);
+  // gameCircling.Draw(gameScreen);
 }
   GetGameScreen().Flush();
 }
 void Game::OnMouseEvent(const graphics::MouseEvent &event) {
+  if (!gameStarted && event.GetMouseAction() == graphics::MouseAction::kPressed) {
+    gameStarted = true;
+  }
   if (event.GetMouseAction() == graphics::MouseAction::kMoved ||
       event.GetMouseAction() == graphics::MouseAction::kDragged) {
     int new_x = event.GetX() - player_.GetWidth() / 2;
@@ -154,13 +158,10 @@ void Game::OnMouseEvent(const graphics::MouseEvent &event) {
       player_.SetY(old_y);
     }
   }
-  if(!gameStarted && event.GetMouseAction() == graphics::MouseAction::kPressed) {
-    gameStarted = true;
-  }
-  if (score_ < 100 && !HasLost() && event.GetMouseAction() == graphics::MouseAction::kPressed || event.GetMouseAction() == graphics::MouseAction::kReleased) {
+  if (gameStarted && score_ < 100 && !HasLost() && event.GetMouseAction() == graphics::MouseAction::kPressed || event.GetMouseAction() == graphics::MouseAction::kReleased) {
      std::unique_ptr<PlayerProjectile> pshot = std::make_unique<PlayerProjectile>(GetPlayer().GetX()+(GetPlayer().GetWidth()/2), GetPlayer().GetY());
      GetPlayerProjectiles().push_back(std::move(pshot));
-  } else if (HasLost() && event.GetMouseAction() == graphics::MouseAction::kPressed) {
+  } else if (gameStarted && HasLost() && event.GetMouseAction() == graphics::MouseAction::kPressed) {
     gameState = false;
     score_ = 0;
     deathCount++;

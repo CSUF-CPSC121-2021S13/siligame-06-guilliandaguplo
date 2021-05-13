@@ -41,18 +41,29 @@ class Opponent : public GameElement {
     int count, frame = 0;
 };
 
-class Decor : public GameElement {
+class PlayerTalking : public GameElement {
   public:
-    Decor() : GameElement(0,0,0,0) {}
-    Decor(const int &x, const int &y) : GameElement(x, y, 0, 0) {}
+    PlayerTalking() : GameElement(0,0,0,0) {}
+    PlayerTalking(const int &x, const int &y) : GameElement(x, y, 0, 0) {}
     void Draw(graphics::Image &background) {
       Helper(background, playerTalkFrames[frame].get(), 0, 400);
-      frame == 4 ? frame = 0 : frame++;
+      frame == 7 ? frame = 0 : frame++;
     }
     void Move(const graphics::Image &gameScreen) {}
   private:
     int frame = 0;
 };
 
-
+class GameCircling : public GameElement {
+  public:
+    GameCircling() : GameElement(0,0,0,0) {}
+    GameCircling(const int &x, const int &y) : GameElement(x, y, 0, 0) {}
+    void Draw(graphics::Image &background) {
+      Helper(background, gameAnimation[frame].get(), 275, 300);
+      frame == 63 ? frame = 0 : frame++;
+    }
+    void Move(const graphics::Image &gameScreen) {}
+  private:
+    int frame = 0;
+};
 #endif

@@ -4,13 +4,13 @@
 #include "game_element.h"
 
 int main() {
-  // Game gameO;
-  // gameO.Init();
-  // gameO.Start();
+  Game gameO;
+  gameO.Init();
+  gameO.Start();
 
-  graphics::Image test;
-  test.Load("Talk1.bmp");
-  test.ShowUntilClosed();
+  // graphics::Image test;
+  // test.Load("Talk1.bmp");
+  // test.ShowUntilClosed();
   // gameO.CreateOpponents();
   // gameO.CreateOpponents();
   // gameO.CreateOpponents();
