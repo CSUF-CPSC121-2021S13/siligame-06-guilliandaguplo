@@ -98,20 +98,20 @@ void Game::UpdateScreen() {
   gameScreen.DrawText(0,0, score + std::to_string(GetScore()), 32, graphics::Color(0,0,0));
   std::string deathTrack = "Deaths: ";
   gameScreen.DrawText(650, 0, deathTrack + std::to_string(deathCount), 32, graphics::Color(0,0,0));
-  if (player_.GetIsActive()) player_.Draw(gameScreen);
+  if (player_.GetIsActive()) player_.Draw(gameScreen, paFrames);
   for (int i = 0; i < olist.size(); i++) {
-      if (olist[i]->GetIsActive() && !(olist[i]->IsOutOfBounds(gameScreen))) {
-        olist[i]->Draw(gameScreen);
+      if (olist[i]->GetIsActive()) {
+        olist[i]->Draw(gameScreen, oaFrames);
       }
     }
     for (int i = 0; i < oshots_.size(); i++) {
       if (oshots_[i]->GetIsActive() && !(oshots_[i]->IsOutOfBounds(gameScreen))) {
-        oshots_[i]->Draw(gameScreen);
+        oshots_[i]->Draw(gameScreen, oaFrames);
       }
     }
     for (int i = 0; i < pshots_.size(); i++) {
       if (pshots_[i]->GetIsActive() && !(pshots_[i]->IsOutOfBounds(gameScreen))) {
-        pshots_[i]->Draw(gameScreen);
+        pshots_[i]->Draw(gameScreen, paFrames);
       }
     }
   } else {
@@ -125,18 +125,25 @@ void Game::UpdateScreen() {
 }
 
 void Game::OnAnimationStep() {
-  if (gameStarted) {
   if (olist.size() == 0) CreateOpponents(10 + rand() % 23);
   else if (olist.size() == 3) CreateOpponents(5 + rand() % 10);
 
+  if (gameStarted) {
   MoveGameElements();
   LaunchProjectiles();
   FilterIntersections();
   RemoveInactive();
   UpdateScreen();
 } else {
-  playerTalking.Draw(gameScreen);
-  // gameCircling.Draw(gameScreen);
+  gameScreen.Load("map.bmp");
+  playerTalking.Draw(gameScreen,playerTalkFrames);
+  gameScreen.DrawText(240,400, "Welcome to Banana Birds!", 50, graphics::Color(255, 255, 255));
+  gameScreen.DrawText(200,450, "LEFT CLICK TO START THE GAME", 35, graphics::Color(255, 255, 255));
+  for (size_t i = 0; i < olist.size(); i++) {
+    olist[i]->Draw(gameScreen,oaFrames);
+    olist[i]->Move(gameScreen);
+  }
+
 }
   GetGameScreen().Flush();
 }

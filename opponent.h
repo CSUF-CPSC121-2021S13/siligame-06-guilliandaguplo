@@ -12,7 +12,7 @@ class OpponentProjectile : public GameElement {
   OpponentProjectile() : GameElement(0, 0, 15, 15) {}
   OpponentProjectile(const int &x, const int &y) : GameElement(x, y, 15, 15) {}
 
-  void Draw(graphics::Image &background) override;
+  void Draw(graphics::Image &background, std::vector<std::unique_ptr<graphics::Image> > &animations) override;
   void Move(const graphics::Image &gameScreen) override;
 };
 
@@ -22,7 +22,7 @@ class Opponent : public GameElement {
   Opponent(const int &x, const int &y) : GameElement(x, y, 40, 40), count(0) {}
 
 
-  void Draw(graphics::Image &background) override;
+  void Draw(graphics::Image &background, std::vector<std::unique_ptr<graphics::Image> > &animations) override;
   void Move(const graphics::Image &gameScreen) override;
 
   std::unique_ptr<OpponentProjectile> LaunchProjectile() {
@@ -42,28 +42,18 @@ class Opponent : public GameElement {
 };
 
 class PlayerTalking : public GameElement {
-  public:
-    PlayerTalking() : GameElement(0,0,0,0) {}
-    PlayerTalking(const int &x, const int &y) : GameElement(x, y, 0, 0) {}
-    void Draw(graphics::Image &background) {
-      Helper(background, playerTalkFrames[frame].get(), 0, 400);
-      frame == 7 ? frame = 0 : frame++;
-    }
-    void Move(const graphics::Image &gameScreen) {}
+ public:
+  PlayerTalking() : GameElement(0, 0, 200, 200) {}
+  PlayerTalking(const int &x, const int &y) : GameElement(x, y, 200, 200) {}
+
+  void Draw(graphics::Image &background, std::vector<std::unique_ptr<graphics::Image> > &animations) override {
+    Helper(background, animations[frame].get(), GetX(), GetY());
+  (frame == 7) ? frame = 0 : frame++;
+  }
+  void Move(const graphics::Image &gameScreen) override {}
+
   private:
     int frame = 0;
 };
 
-class GameCircling : public GameElement {
-  public:
-    GameCircling() : GameElement(0,0,0,0) {}
-    GameCircling(const int &x, const int &y) : GameElement(x, y, 0, 0) {}
-    void Draw(graphics::Image &background) {
-      Helper(background, gameAnimation[frame].get(), 275, 300);
-      frame == 63 ? frame = 0 : frame++;
-    }
-    void Move(const graphics::Image &gameScreen) {}
-  private:
-    int frame = 0;
-};
 #endif

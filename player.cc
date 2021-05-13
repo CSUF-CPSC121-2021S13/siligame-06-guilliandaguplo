@@ -2,14 +2,11 @@
 #include <iostream>
 
 
-void Player::Draw(graphics::Image &background) {
-  int x, y;
-  x = GetX();
-  y = GetY();
-  Helper(background, paFrames[frame].get(), x, y);
+void Player::Draw(graphics::Image &background, std::vector<std::unique_ptr<graphics::Image> > &animations) {
+  Helper(background, animations[frame].get(), GetX(), GetY());
   (frame == 8) ? frame = 0 : frame++;
 }
-void PlayerProjectile::Draw(graphics::Image &background) {
+void PlayerProjectile::Draw(graphics::Image &background, std::vector<std::unique_ptr<graphics::Image> > &animations) {
   int x, y;
   x = GetX();
   y = GetY();

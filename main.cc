@@ -4,9 +4,13 @@
 #include "game_element.h"
 
 int main() {
+  // graphics::Image test;
+  // test.Load("test0.bmp");
+  // test.ShowUntilClosed();
   Game gameO;
   gameO.Init();
   gameO.Start();
+
 
   // graphics::Image test;
   // test.Load("Talk1.bmp");

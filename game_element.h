@@ -11,12 +11,9 @@ class GameElement {
 
   GameElement(const int &x, const int &y, const int width, const int &height)
       : x_(x), y_(y), width_(width), height_(height), is_active(true) {
-      LoadAnimations();
-      bananaImg.Load("banana.bmp");
-      poopImg.Load("poop.bmp");
+        bananaImg.Load("banana.bmp");
+        poopImg.Load("poop.bmp");
       }
-
-
   int GetWidth() const { return width_; }
   int GetHeight() const { return height_; }
 
@@ -33,38 +30,37 @@ class GameElement {
 
   bool IntersectsWith(GameElement* object);
   bool IsOutOfBounds(const graphics::Image &gameScreen);
-
-  void LoadAnimations() {
-    for (size_t i = 1; i <= 9; i++) {
-      int p = i;
-      std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
-      std::string prefix = "player";
-      frame->Load(prefix + std::to_string(p) + ".bmp");
-      paFrames.push_back(std::move(frame));
-    }
-    for (size_t i = 0; i < 8; i++) {
-      int p = i;
-      std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
-      std::string prefix = "test";
-      frame->Load(prefix + std::to_string(p) + ".bmp");
-      playerTalkFrames.push_back(std::move(frame));
-    }
-    for (size_t i = 1; i <= 4; i++) {
-      int p = i;
-      std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
-      std::string prefix = "opponent";
-      frame->Load(prefix + std::to_string(p) + ".bmp");
-      oaFrames.push_back(std::move(frame));
-    }
-    // for (size_t i = 0; i < 64; i++) {
-    //   int p = i;
-    //   std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
-    //   std::string prefix = std::to_string(p);
-    //   frame->Load(prefix + "ICON.bmp");
-    //   gameAnimation.push_back(std::move(frame));
-    // }
-  }
-  virtual void Draw(graphics::Image &background) = 0;
+  // void LoadAnimations() {
+  //   for (size_t i = 1; i <= 9; i++) {
+  //     int p = i;
+  //     std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
+  //     std::string prefix = "player";
+  //     frame->Load(prefix + std::to_string(p) + ".bmp");
+  //     paFrames.push_back(std::move(frame));
+  //   }
+  //   for (size_t i = 0; i < 8; i++) {
+  //     int p = i;
+  //     std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
+  //     std::string prefix = "test";
+  //     frame->Load(prefix + std::to_string(p) + ".bmp");
+  //     playerTalkFrames.push_back(std::move(frame));
+  //   }
+  //   for (size_t i = 1; i <= 4; i++) {
+  //     int p = i;
+  //     std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
+  //     std::string prefix = "opponent";
+  //     frame->Load(prefix + std::to_string(p) + ".bmp");
+  //     oaFrames.push_back(std::move(frame));
+  //   }
+  //   // for (size_t i = 0; i < 64; i++) {
+  //   //   int p = i;
+  //   //   std::unique_ptr<graphics::Image> frame = std::make_unique<graphics::Image>();
+  //   //   std::string prefix = std::to_string(p);
+  //   //   frame->Load(prefix + "ICON.bmp");
+  //   //   gameAnimation.push_back(std::move(frame));
+  //   // }
+  // }
+  virtual void Draw(graphics::Image &background, std::vector<std::unique_ptr<graphics::Image> > &animations) = 0;
   virtual void Move(const graphics::Image &gameScreen) = 0;
  protected:
   int width_, height_, x_, y_;
@@ -72,10 +68,6 @@ class GameElement {
   graphics::Image bananaImg, poopImg;
   graphics::Image* banana = &bananaImg;
   graphics::Image* poop = &poopImg;
-  std::vector<std::unique_ptr<graphics::Image> > paFrames;
-  std::vector<std::unique_ptr<graphics::Image> > oaFrames;
-  std::vector<std::unique_ptr<graphics::Image> > gameAnimation;
-  std::vector<std::unique_ptr<graphics::Image> > playerTalkFrames;
 };
 
 #endif
